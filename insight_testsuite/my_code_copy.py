@@ -7,7 +7,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 # reads the input tweet file
-input_file = open('tweets.txt')
+input_file = open(sys.argv[1])
+output_file = open(sys.argv[2],'a')
 lines = input_file.readlines()
 leng = len(lines)
 #print leng
@@ -56,7 +57,7 @@ while(count < leng-1):
 	G.add_edges_from(set_list)
 	try:
 		avg_deg = round(sum(G.degree().values())*1.0/len(G.nodes()),2)
-		print len(G.nodes()),avg_deg
+		print avg_deg
 	except ZeroDivisionError:
 		print "No hashtags found in the last 60 seconds to create hash graph"
 
@@ -68,15 +69,12 @@ if (abs(max_date_tweet - date_of_tweet).seconds <= 60):
     	try:
         	hash_tags = []
         	hash_text = json['entities']['hashtags']
-        	#print hash_text
         	# if there is any hash tag in the tweet, extract only the ascii content hash tags from the tweet
         	if len(hash_text) > 0:
         		hash_tags = ['#'+i['text'].encode('ascii','ignore').lower() for i in hash_text if len(i['text'].encode('ascii','ignore')) > 0]
-            	#print hash_tags
         	# if the hash tags are more than one, then they are used to build edge-list and to calculate degree
         	if len(hash_tags) > 1:
         		time_list.append(date_of_tweet)
-        		#print time_list
             	total_hashtags.append(hash_tags)
             	indices_to_delete = [i for i, j in enumerate(time_list) if abs(j-max_date_tweet).seconds > 60]
         	time_list = [x for i,x in enumerate(time_list) if i not in indices_to_delete]
@@ -95,7 +93,7 @@ if (abs(max_date_tweet - date_of_tweet).seconds <= 60):
 	G.add_edges_from(set_list)
 	try:
 		avg_deg = round(sum(G.degree().values())*1.0/len(G.nodes()),2)
-		print len(G.nodes()),avg_deg
+		print avg_deg
 		output_file.write('%s\n'%(avg_deg))
 	except ZeroDivisionError:
 		print "No hashtags found in the last 60 seconds to create hash graph"
