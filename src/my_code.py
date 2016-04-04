@@ -14,7 +14,6 @@ leng = len(lines)
 #print leng
 time_list = []
 total_hashtags=[]
-edge_list=[]
 # Loops through the input tweet file, till it reaches a tweet posted 60 seconds ago..
 for count in range(leng):
 	json = sj.loads(lines[count].strip())
@@ -41,6 +40,7 @@ for count in range(leng):
 			print "Error in hashtags"
 
 	# Creating all the combinations of hash tags and sorted so as to avoid duplicated edge list
+	edge_list=[]
 	for i in total_hashtags:
 		edge_list.append(list(combinations(sorted(i),2)))
 		#print edge_list
