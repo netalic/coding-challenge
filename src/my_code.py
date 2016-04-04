@@ -30,9 +30,12 @@ for count in range(leng):
 				hash_tags = ['#'+i['text'].encode('ascii','ignore').lower() for i in hash_text if len(i['text'].encode('ascii','ignore')) > 0]
 				#print hash_tags
         	# if the hash tags are more than one, then they are used to build edge-list and to calculate degree
-			if len(hash_tags) > 1:
-				time_list.append(date_of_tweet)
-				total_hashtags.append(hash_tags)
+				if len(hash_tags) > 1:
+					total_hashtags.append(hash_tags)
+				else:
+					time_list.pop()
+			else:
+				time_list.pop()
 			indices_to_delete = [i for i, j in enumerate(time_list) if abs(j-max_date_tweet).seconds > 60]
 			time_list = [x for i,x in enumerate(time_list) if i not in indices_to_delete]
 			total_hashtags = [x for i,x in enumerate(total_hashtags) if i not in indices_to_delete]
