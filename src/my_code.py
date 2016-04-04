@@ -94,6 +94,7 @@ if (abs(max_date_tweet - date_of_tweet).seconds <= 60):
 	try:
 		avg_deg = round(sum(G.degree().values())*1.0/len(G.nodes()),2)
 		print avg_deg
+		output_file.write('%s\n'%(avg_deg))
 	except ZeroDivisionError:
 		print "No hashtags found in the last 60 seconds to create hash graph"
 
