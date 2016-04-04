@@ -91,3 +91,4 @@ function run_all_tests {
 check_project_struct
 run_all_tests
 
+python ./my_code.py ./tests/test-2-tweets-all-distinct/tweet_input/tweets.txt ./tests/test-2-tweets-all-distinct/tweet_output/output.txt
